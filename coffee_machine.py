@@ -1,4 +1,6 @@
 from page_func import page, int_input
+
+# initialize coffee ingredients quantity
 machine = {"water": 400,
            "milk": 540,
            "coffee beans": 120,
@@ -6,6 +8,19 @@ machine = {"water": 400,
            "money": 550}
 
 
+# function that show quantity of coffee ingredients
+def infoPage():
+    page(["The coffee machine has", 1,
+          str(machine["water"]) + " of " + "water", 1,
+          str(machine["milk"]) + " of " + "milk", 1,
+          str(machine["coffee beans"]) + " of " + "coffee beans", 1,
+          str(machine["disposable cups"]) +
+          " of " + "disposable cups", 1,
+          str(machine["money"]) + " of " + "money"])
+    int_input()
+
+
+# funciton that show page to buy
 def buyPage():
     inp_buy = False
     type_coffee = [{'c': "espresso", 'sell': True}, {
@@ -17,6 +32,9 @@ def buyPage():
         for use, many in coffee.items():
             if (machine[use] - many < 0):
                 type_coffee[i]["sell"] = False
+                break
+            else:
+                type_coffee[i]["sell"] = True
     while inp_buy is False:
         page(["What do you want to buy"] +
              ["%d - %s" % (i+1, coffee["c"]) if (coffee["sell"] is True)
@@ -40,6 +58,7 @@ def buyPage():
         machine["disposable cups"] -= 1
 
 
+# function to fill the ingredients quantity
 def fillPage():
     page(["Write how many ml of water do you want to add :"])
     machine["water"] += int_input()
@@ -51,6 +70,7 @@ def fillPage():
     machine["disposable cups"] += int_input()
 
 
+# function to take all money from machine
 def takePage():
     page(["I take you $" + str(machine["money"])])
     machine["money"] = 0
@@ -58,14 +78,7 @@ def takePage():
 
 
 while True:
-    page(["The coffee machine has", 1,
-          str(machine["water"]) + " of " + "water", 1,
-          str(machine["milk"]) + " of " + "milk", 1,
-          str(machine["coffee beans"]) + " of " + "coffee beans", 1,
-          str(machine["disposable cups"]) +
-          " of " + "disposable cups", 1,
-          str(machine["money"]) + " of " + "money"])
-    int_input()
+    infoPage()
     action = ""
     while (action != "buy" and action != "fill" and action != "take"):
         page(["Write action (buy, fill, take)"])
